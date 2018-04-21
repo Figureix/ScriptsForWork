@@ -1,5 +1,5 @@
 #!/bin/bash
-#Program to collect Serial Numbers from iPad/iPhone deices
+#Program to collect Serial Numbers from iPad/iPhone devices
 #	Only works when device in booted to recovery mode
 
 # Set up our save/log file
