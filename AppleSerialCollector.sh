@@ -3,7 +3,9 @@
 #	Only works when device in booted to recovery mode
 
 # Set up our save/log file
-echo -e "\n\nStarting: $(date)\n" >> SerialsCollected.txt
+VARDATE=$(date)
+mkdir ./"SerialsCollected $VARDATE"
+echo -e "\n\nStarting: $(date)\n" >> ./"SerialsCollected $VARDATE"/SerialsCollected.txt
 
 # Pipe syslog into the while loop where we will read each new line that gets added -- checking for serial number
 tail -f /var/log/syslog | {
@@ -27,8 +29,11 @@ tail -f /var/log/syslog | {
 				read  -p "Please enter the PT Matching [$var]: " var2 </dev/tty
 
 				# With the PT number, we will save the PT + Serial number to a text file
-				echo -e "$var2 \t $var" >> SerialsCollected.txt
-				echo -e "PT and Serial have been written to file\n"
+				echo -e "$var2 \t $var" >> ./"SerialsCollected $VARDATE"/SerialsCollected.txt
+				echo -e "PT and Serial have been written to file in dir: \"SerialsCollected $VARDATE\""
+				# Here I downloaded, cmake'd, make'd, and make install'd zint for barcode generation
+				zint --border=2 -o ./"SerialsCollected $VARDATE"/"$var2".png -d $var
+				echo -e "--barcode has also been generated--\n"
 			fi
 	done
 	}
