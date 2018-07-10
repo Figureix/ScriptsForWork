@@ -7,49 +7,54 @@
 
 #Clear the Terminal
 clear
+VAL=$(uname -r)
 echo
 echo
 
 # Ask for user name and save it
 read -p "Type your User Name: " USER
 
-# Snagged the password prompt code from stackoverflow
-# Make two variables
-unset PASS
-unset CHARCOUNT
+if [[ $VAL == "4.10.0-24-generic" ]] ; then
+	# Snagged the password prompt code from stackoverflow
+	# Make two variables
+	unset PASS
+	unset CHARCOUNT
 
-#ask for Password
-echo -n "Type in your password: "
-#Don't echo input/output
-stty -echo
-CHARCOUNT=0
-while IFS= read -p "$PROMPT" -r -s -n 1 CHAR
-do
-    # Enter - accept password
-	# If return key is pressed, stop loop
-    if [[ $CHAR == $'\0' ]] ; then
-        break
-    fi
-    # Backspace
-	# If backspace is pressed, delete a '*'
-    if [[ $CHAR == $'\177' ]] ; then
-        if [ $CHARCOUNT -gt 0 ] ; then
-            CHARCOUNT=$((CHARCOUNT-1))
-            PROMPT=$'\b \b'
-            PASS="${PASS%?}"
-        else
-            PROMPT=''
-        fi
-    # Add a '*' for anyother input
+	#ask for Password
+	echo -n "Type in your password: "
+	#Don't echo input/output
+	stty -echo
+	CHARCOUNT=0
+	while IFS= read -p "$PROMPT" -r -s -n 1 CHAR
+	do
+	    # Enter - accept password
+		# If return key is pressed, stop loop
+	    if [[ $CHAR == $'\0' ]] ; then
+		break
+	    fi
+	    # Backspace
+		# If backspace is pressed, delete a '*'
+	    if [[ $CHAR == $'\177' ]] ; then
+		if [ $CHARCOUNT -gt 0 ] ; then
+		    CHARCOUNT=$((CHARCOUNT-1))
+		    PROMPT=$'\b \b'
+		    PASS="${PASS%?}"
+		else
+		    PROMPT=''
+		fi
+	    # Add a '*' for anyother input
+		else
+		CHARCOUNT=$((CHARCOUNT+1))
+		PROMPT='*'
+		PASS+="$CHAR"
+	    fi
+	done
+	# Turn echo back on
+	stty echo
+	# End of StackOverflow code
 	else
-        CHARCOUNT=$((CHARCOUNT+1))
-        PROMPT='*'
-        PASS+="$CHAR"
-    fi
-done
-# Turn echo back on
-stty echo
-# End of StackOverflow code
+		echo
+fi
 
 echo
 echo "Thank you. Please pick which folder you wish to Restore from..."
@@ -64,13 +69,10 @@ do
 		"Win10CF")
 			break
 			;;
-		"ClientsCustoms")
-			break
-			;;
 		"Apple")
 			break
 			;;
-		"Imagine")
+		"ClientsCustoms")
 			break
 			;;
 		"Other_Folder")
@@ -86,7 +88,11 @@ if [ $opt == 'Other_Folder' ]; then
 fi
 
 #Pass our User Variables to clonezilla script/commands and run Clonezilla!
-sudo mount -t cifs -o user=$USER,passwd=$PASS //192.168.2.100/images/$opt /home/partimag
+if [[ $VAL == "4.10.0-24-generic" ]] ; then
+	sudo mount -t cifs -o user=$USER,passwd=$PASS //192.168.2.100/images/$opt /home/partimag
+	else
+		sudo mount -t cifs -o user=$USER //192.168.2.100/images/$opt /home/partimag
+fi
 sleep 2
 sudo ocs-sr -g auto -e1 auto -e2 --batch -r -j2 -scr -p reboot restoredisk ask_user ask_user
 
