@@ -1,0 +1,94 @@
+# From CLonezilla's site, we can download a zip version of the program and 
+# make edits to the syslinux and isolinux (even the efi based grub.cfg file) 
+# For purposes of getting Clonezilla to follow some automation -- We tell clonezilla to pick up script from the server
+
+# Script below, placed in nfs share on network computer
+#!/bin/bash
+
+#Clear the Terminal
+clear
+echo
+echo
+
+# Ask for user name and save it
+read -p "Type your User Name: " USER
+
+# Snagged the password prompt code from stackoverflow
+# Make two variables
+unset PASS
+unset CHARCOUNT
+
+#ask for Password
+echo -n "Type in your password: "
+#Don't echo input/output
+stty -echo
+CHARCOUNT=0
+while IFS= read -p "$PROMPT" -r -s -n 1 CHAR
+do
+    # Enter - accept password
+	# If return key is pressed, stop loop
+    if [[ $CHAR == $'\0' ]] ; then
+        break
+    fi
+    # Backspace
+	# If backspace is pressed, delete a '*'
+    if [[ $CHAR == $'\177' ]] ; then
+        if [ $CHARCOUNT -gt 0 ] ; then
+            CHARCOUNT=$((CHARCOUNT-1))
+            PROMPT=$'\b \b'
+            PASS="${PASS%?}"
+        else
+            PROMPT=''
+        fi
+    # Add a '*' for anyother input
+	else
+        CHARCOUNT=$((CHARCOUNT+1))
+        PROMPT='*'
+        PASS+="$CHAR"
+    fi
+done
+# Turn echo back on
+stty echo
+# End of StackOverflow code
+
+echo
+echo "Thank you. Please pick which folder you wish to Restore from..."
+echo
+
+# Offer user folder suggestions/options
+PS3='Pick an option, then press Enter: '
+options=("Win10CF" "ClientsCustoms" "Apple" "Imagine" "Other_Folder")
+select opt in "${options[@]}"
+do
+	case $opt in
+		"Win10CF")
+			break
+			;;
+		"ClientsCustoms")
+			break
+			;;
+		"Apple")
+			break
+			;;
+		"Imagine")
+			break
+			;;
+		"Other_Folder")
+			break
+			;;
+		*) echo Invalid Option;;
+	esac
+done
+
+# If they want a different Folder, ask them the name and save it
+if [ $opt == 'Other_Folder' ]; then
+	read -p "Enter /Images/[Directory]: " opt
+fi
+
+#Pass our User Variables to clonezilla script/commands and run Clonezilla!
+sudo mount -t cifs -o user=$USER,passwd=$PASS //192.168.2.100/images/$opt /home/partimag
+sleep 2
+sudo ocs-sr -g auto -e1 auto -e2 --batch -r -j2 -scr -p reboot restoredisk ask_user ask_user
+
+
+# This script is intended to make things simpler -- David Carlson
