@@ -5,7 +5,7 @@ label Clonezilla live  SCRIPTED
   MENU LABEL Clonezilla live SCRIPTED (Default settings, VGA 800x600)
   # MENU PASSWD
   kernel /live/vmlinuz
-  append initrd=/live/initrd.img boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v eth0" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="yes" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
+  append initrd=/live/initrd.img boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="yes" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
   
   
 # From isolinux.cfg
@@ -15,12 +15,12 @@ label Clonezilla live  SCRIPTED
   MENU LABEL Clonezilla live SCRIPTED (Default settings, VGA 800x600)
   # MENU PASSWD
   kernel /live/vmlinuz
-  append initrd=/live/initrd.img boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v eth0" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="yes" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
+  append initrd=/live/initrd.img boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="yes" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
   
   
 # From the EFI/boot/grub.cfg file
   menuentry "Clonezilla live (SCRIPTED settings, VGA 800x600)"{
   search --set -f /live/vmlinuz
-  linux /live/vmlinuz boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset noeject locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v eth0" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="no" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
+  linux /live/vmlinuz boot=live union=overlay username=user hostname=artful config quiet components noswap edd=on nomodeset noeject locales=en_US.UTF-8 keyboard-layouts=NONE ocs_prerun1="dhclient -v" ocs_prerun2="sleep 2" ocs_preload="mount -t nfs 192.168.2.100:/nfs/ClonezillaScript/ /tmp/nfs -o ro" ocs_live_run="sudo bash /opt/customscript" ocs_live_extra_param="" ocs_live_batch="no" vga=788 ip= net.ifnames=0  splash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=1
   initrd /live/initrd.img
 }
