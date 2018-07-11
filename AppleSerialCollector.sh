@@ -40,3 +40,7 @@ tail -f /var/log/syslog | {
 
 # Script crafted by David Carlson -- basic googling and some stackoverflow//debugging was used to make this work.
 
+# Notes for Zint - Barcode
+# apt install cmake build-essential libpng12-dev
+# follow zint install steps
+# Then remove unecessary packages (if needed/wanted)
