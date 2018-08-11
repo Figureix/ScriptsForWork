@@ -3,3 +3,7 @@
 exec sudo dmidecode --type 17 > $HOME/Documents/GetMemoryInfo_Output &
 sleep 1
 lspci >> $HOME/Documents/GetMemoryInfo_Output
+
+egrep 'Channel[A-Z]|Size:' $HOME/Documents/GetMemoryInfo_Output | paste - - >> $HOME/Documents/GetMemoryInfo_OutputSticks
+sed -i $'s/\tLocator: //; s/Size: //' $HOME/Documents/GetMemoryInfo_OutputSticks $HOME/Documents/GetMemoryInfo_OutputSticks
+sync
