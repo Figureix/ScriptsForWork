@@ -8,7 +8,7 @@ mkdir ./"SerialsCollected $VARDATE"
 echo -e "\n\nStarting: $(date)\n" >> ./"SerialsCollected $VARDATE"/SerialsCollected.txt
 
 # Pipe syslog into the while loop where we will read each new line that gets added -- checking for serial number
-tail -f /var/log/syslog | {
+tail -f /var/log/syslog 2>/dev/null | {
 	clear
 	echo -e "=======iPad/iPhone Serial Collection Script=======\n  Results will be saved to SerialsCollected.txt    \n        When finished: Ctrl + C to stop.      \n To Capture: Plug in Device while in Recovery Mode\n                 ____by DC____\n\n"
 	
