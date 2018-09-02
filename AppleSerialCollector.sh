@@ -29,7 +29,7 @@ tail -f /var/log/syslog 2>/dev/null | {
 				read  -p "Please enter the PT Matching [$var]: " var2 </dev/tty
 
 				# With the PT number, we will save the PT + Serial number to a text file
-				echo -e "$var2 \t $var" >> ./"SerialsCollected $VARDATE"/SerialsCollected.txt
+				echo -e "$var2\t$var" >> ./"SerialsCollected $VARDATE"/SerialsCollected.txt
 				echo -e "PT and Serial have been written to file in dir: \"SerialsCollected $VARDATE\""
 				# Here I downloaded, cmake'd, make'd, and make install'd zint for barcode generation
 				zint --border=2 -o ./"SerialsCollected $VARDATE"/"$var2".png -d $var
